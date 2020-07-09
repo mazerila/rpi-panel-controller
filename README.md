@@ -1,9 +1,11 @@
 # rpi-panel-controller
 The Raspberry Pi panel controller is the client part of IoT panel advertising project.
 
+-------------------
+
+### Execution
 - The project is based on Python3, however with some tiny modifications you may execute it with python 2 as well.
 - This should be executed as sudo
--------------------
 
 ### User terminal commands 
 ```
@@ -14,4 +16,5 @@ s/stop    : Stop displaying
 r/restart : Display from the beginning
 ```
 
+### Logging
 The log file will generated in the same folder.
