@@ -11,9 +11,11 @@ The Raspberry Pi panel controller is the client part of IoT panel advertising pr
 ```
 q/quit    : Quit the program
 h/help    : Show help
-d/display : Display the current file
+di/d-image : Display the current file as an image
+dv/d-video : Display the current file as a video
 s/stop    : Stop displaying
 r/restart : Display from the beginning
+f/file     : set file name
 ```
 
 ### Logging
