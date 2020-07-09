@@ -9,12 +9,12 @@ The Raspberry Pi panel controller is the client part of IoT panel advertising pr
 
 ### User terminal commands 
 ```
-q/quit    : Quit the program
-h/help    : Show help
+q/quit     : Quit the program
+h/help     : Show help
 di/d-image : Display the current file as an image
 dv/d-video : Display the current file as a video
-s/stop    : Stop displaying
-r/restart : Display from the beginning
+s/stop     : Stop displaying
+r/restart  : Display from the beginning
 f/file     : set file name
 ```
 
