@@ -11,21 +11,25 @@ from time import time
 
 class PanelDisplay (Thread):
 	proc = None
+	filename = "/home/pi/src/samples/vid01.mp4"
+	contentType = "VIEW-IMAGE"
 	def __init__(self, threadID, name):
 		Thread.__init__(self)
 		self.threadID = threadID
 		self.name = name
 	def terminate(self): 
 		self._running = False
-		if self.proc != None:
+		if self.proc != None and self.proc.poll() == None:
 			print("Stopping")
-			output = os.killpg(os.getpgid(self.proc.pid), signal.SIGTERM)  # Send the signal to all the process groups
+			# Send the signal to all the process groups
+			output = os.killpg(os.getpgid(self.proc.pid), signal.SIGTERM)
 			logging.info(output)
 			self.proc = None
-	def	play(self):
+	def	play(self, cType):
+		self.contentType = cType
 		self.run()
 	def	run(self):
-		if self.proc == None:
+		if self.proc == None or self.proc.poll() != None:
 			self.display();
 		else:
 			print("The panel is already busy!")
@@ -35,6 +39,9 @@ class PanelDisplay (Thread):
 			self.terminate();
 		self.display()
 	def display(self):
+		if self.filename == "":
+			print("filename not set!")
+			return
 		# Default values for parameters
 		cols="--led-cols=64"
 		rows="--led-rows=32"
@@ -43,42 +50,42 @@ class PanelDisplay (Thread):
 		multiplexing="--led-multiplexing=0"
 		slowdown="--led-slowdown-gpio=2"
 		pwm="--led-pwm-lsb-nanoseconds=200"
-		brightness="--led-brightness=70"
+		brightness="--led-brightness=80"
 		mapper="--led-pixel-mapper=Mirror:V;Mirror:H"
 		nohardware="--led-no-hardware-pulse"
-		# other options: -f -w5 -l2 -t10
+		# TODO : adding other options: -f -w5 -l2 -t10
 		# os.system("ls -l")
 
-		# filename="/home/pi/src/samples/gif02-2.gif"
-		filename="/home/pi/src/samples/vid01.mp4"
+		if self.contentType == "VIEW-IMAGE":
+			viewer="/home/pi/src/rpi-rgb-led-matrix/utils/led-image-viewer"
+		elif self.contentType == "VIEW-VIDEO":
+			viewer="/home/pi/src/rpi-rgb-led-matrix/utils/video-viewer"			
 
-		print ("Displaying the file: ", filename)
-		logging.info("Displaying the file: "+filename)
-		cmd_params = ("/home/pi/src/rpi-rgb-led-matrix/utils/video-viewer", "-f", cols, rows, chain, parallel, multiplexing, slowdown, pwm, brightness, filename)
+		print (viewer, "Displaying the file: ", self.filename)
+		logging.info("Displaying the file: " + self.filename)
+		
+		cmd_params = (viewer, "-f", cols, rows, chain, parallel, multiplexing, slowdown, pwm, brightness, self.filename)
 		cmd = " ".join(cmd_params)
 		# The os.setsid() is passed in the argument preexec_fn so
 		# it's run after the fork() and before  exec() to run the shell.
-		self.proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, 
-							   shell=True, preexec_fn=os.setsid) 
-		# output = subprocess.call(["/home/pi/src/rpi-rgb-led-matrix/utils/led-image-viewer", "-l3", cols, rows, chain, parallel, multiplexing, slowdown, pwm, brightness, filename])
-		# subprocess.call(["/home/pi/src/rpi-rgb-led-matrix/utils/video-viewer", "-f", cols, rows, chain, parallel, multiplexing, slowdown, pwm, brightness, filename])
+		self.proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
-		#logging.info("Output result: "+str(output))
-
-	
+		
 #--------------------------------------------------------------
 # Global vriables
-interruptFlag = 0
+
 
 #--------------------------------------------------------------
 # General methods
 
 def showHelp():
-	print (" q/quit    : Quit the program\n"
-		   " h/help    : Show help \n"
-	       " d/display : Display the current file\n"
-	       " s/stop    : Stop displaying\n"
-	       " r/restart : Display from the beginning\n"
+	print (" q/quit     : Quit the program\n"
+		   " h/help     : Show help \n"
+	       " di/d-image : Display the current file as an image \n"
+	       " dv/d-video : Display the current file as a video \n"
+	       " s/stop     : Stop displaying\n"
+	       " r/restart  : Display from the beginning\n"
+	       " f/file     : set file name \n"
 	       "----------------------------------------\n")
 	
 def userCommandDict(cmd):
@@ -87,19 +94,23 @@ def userCommandDict(cmd):
 		"help":"help",
 		"q":"QUIT",
 		"quit":"QUIT",
-		"d":"START",
-		"display":"START",
+		"di":"VIEW-IMAGE",
+		"d-image":"VIEW-IMAGE",
+		"dv":"VIEW-VIDEO",
+		"d-video":"VIEW-VIDEO",
 		"r":"RESTART",
 		"restart":"RESTART",
 		"s":"STOP",
-		"stop":"STOP"
+		"stop":"STOP",
+		"f":"FILE",
+		"file":"FILE"
 	}
 	return switcher.get(cmd,"Invalid request")
 #--------------------------------------------------------------
 # Main thread
 
 def main():
-	logging.basicConfig(filename='controller.log', level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+	logging.basicConfig(filename='logs/controller.log', level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 	logger = logging.getLogger(__name__)
 	logging.info('')
 	logging.info('Started')
@@ -118,12 +129,16 @@ def main():
 		if userCommandDict(cmd) == "QUIT":
 			th_panel.terminate()
 			break
-		elif userCommandDict(cmd)== "START":
-			th_panel.play()
+		elif userCommandDict(cmd)== "VIEW-IMAGE":
+			th_panel.play(userCommandDict(cmd))
+		elif userCommandDict(cmd)== "VIEW-VIDEO":
+			th_panel.play(userCommandDict(cmd))
 		elif userCommandDict(cmd)== "RESTART":
 			th_panel.restart()
 		elif userCommandDict(cmd)== "STOP":
 			th_panel.terminate()
+		elif userCommandDict(cmd)== "FILE":
+			th_panel.filename = input("enter the file name: ")
 	
 	  
 	logging.info('Exiting Main Thread : Took %s', time() - ts)
