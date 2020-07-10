@@ -16,6 +16,7 @@ dv/d-video : Display the current file as a video
 s/stop     : Stop displaying
 r/restart  : Display from the beginning
 f/file     : set file name
+k/killall  : kill all other running viewers
 ```
 
 ### Logging

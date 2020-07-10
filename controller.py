@@ -86,6 +86,7 @@ def showHelp():
 	       " s/stop     : Stop displaying\n"
 	       " r/restart  : Display from the beginning\n"
 	       " f/file     : set file name \n"
+	       " k/killall  : kill all other running viewers \n"
 	       "----------------------------------------\n")
 	
 def userCommandDict(cmd):
@@ -103,14 +104,36 @@ def userCommandDict(cmd):
 		"s":"STOP",
 		"stop":"STOP",
 		"f":"FILE",
-		"file":"FILE"
+		"file":"FILE",
+		"k":"KILLALL",
+		"killall":"KILLALL"
 	}
 	return switcher.get(cmd,"Invalid request")
+	
+
+def get_pid(name):
+	try:
+		pids = subprocess.check_output(["pidof",name])
+	except:
+		return list()
+
+	return list(map(int,pids.split()))
+
+def killAll():
+	# ps -A | grep viewer
+	pidList = get_pid("video-viewer")
+	pidList.extend(get_pid("led-image-viewer"))
+	
+	if len(pidList)>0:
+		logging.info(str(len(pidList))+" running viewers already exist. Killing them before start.")
+	for pid in pidList:
+		os.kill(pid, signal.SIGKILL)
+	
 #--------------------------------------------------------------
 # Main thread
 
 def main():
-	logging.basicConfig(filename='logs/controller.log', level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+	logging.basicConfig(filename='/home/pi/src/rpi-panel-controller/logs/controller.log', level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 	logger = logging.getLogger(__name__)
 	logging.info('')
 	logging.info('Started')
@@ -139,7 +162,8 @@ def main():
 			th_panel.terminate()
 		elif userCommandDict(cmd)== "FILE":
 			th_panel.filename = input("enter the file name: ")
-	
+		elif userCommandDict(cmd)== "KILLALL":
+			killAll()
 	  
 	logging.info('Exiting Main Thread : Took %s', time() - ts)
 	logging.info('Finished')
