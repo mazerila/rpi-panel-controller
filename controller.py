@@ -53,7 +53,6 @@ class PanelDisplay (Thread):
 		brightness="--led-brightness=80"
 		mapper="--led-pixel-mapper=Mirror:V;Mirror:H"
 		nohardware="--led-no-hardware-pulse"
-		# TODO : adding other options: -f -w5 -l2 -t10
 		# os.system("ls -l")
 
 		if self.contentType == "VIEW-IMAGE":
@@ -64,7 +63,11 @@ class PanelDisplay (Thread):
 		print (viewer, "Displaying the file: ", self.filename)
 		logging.info("Displaying the file: " + self.filename)
 		
-		cmd_params = (viewer, "-f", cols, rows, chain, parallel, multiplexing, slowdown, pwm, brightness, self.filename)
+		cmd_params = list([viewer])
+		# TODO : adding other options: -f -w5 -l2 -t10
+		cmd_params.extend(["-f -F"])
+		cmd_params.extend([cols, rows, chain, parallel, multiplexing, slowdown, pwm, brightness])
+		cmd_params.extend([self.filename])
 		cmd = " ".join(cmd_params)
 		# The os.setsid() is passed in the argument preexec_fn so
 		# it's run after the fork() and before  exec() to run the shell.
@@ -123,9 +126,10 @@ def killAll():
 	# ps -A | grep viewer
 	pidList = get_pid("video-viewer")
 	pidList.extend(get_pid("led-image-viewer"))
+	pidList.extend(get_pid("text-scroller"))
 	
 	if len(pidList)>0:
-		logging.info(str(len(pidList))+" running viewers already exist. Killing them before start.")
+		logging.info(str(len(pidList))+" running viewer(s) already exist. Killing them before start.")
 	for pid in pidList:
 		os.kill(pid, signal.SIGKILL)
 	
