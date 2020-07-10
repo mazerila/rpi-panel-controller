@@ -1,14 +1,36 @@
 #!/usr/bin/env python3
 import sys
 import os
-import signal
-import subprocess
 import logging
+import configparser
+import subprocess
+import signal
 from threading import Thread
 from time import time
-
 #--------------------------------------------------------------
-
+# todo: 
+# 1. parse the config file
+# 2. object oriented structure for configs
+#--------------------------------------------------------------
+class MatrixConfig:
+	configFile="matrix.cfg"
+	displayWidth = 64;
+	displayHeight = 32;
+	panelCols="64"
+	panelRows="32"
+	chainLength="1"
+	parallelCount="1"
+	multiplexing="0"
+	slowdownGpio="2"
+	pwmLsbN1anoseconds="200"
+	brightness="80"
+	pixelMapper="Mirror:V;Mirror:H"
+	nohardwarePulse=True
+	
+	def parseConfig(self, filename = configFile):
+		
+		return
+		
 class PanelDisplay (Thread):
 	proc = None
 	filename = "/home/pi/src/samples/vid01.mp4"
@@ -82,7 +104,8 @@ class PanelDisplay (Thread):
 # General methods
 
 def showHelp():
-	print (" q/quit     : Quit the program\n"
+	print ("---------------------------------------------\n"
+		   " q/quit     : Quit the program\n"
 		   " h/help     : Show help \n"
 	       " di/d-image : Display the current file as an image \n"
 	       " dv/d-video : Display the current file as a video \n"
@@ -90,7 +113,7 @@ def showHelp():
 	       " r/restart  : Display from the beginning\n"
 	       " f/file     : set file name \n"
 	       " k/killall  : kill all other running viewers \n"
-	       "----------------------------------------\n")
+	       "---------------------------------------------\n")
 	
 def userCommandDict(cmd):
 	switcher={
@@ -154,7 +177,7 @@ def main():
 		if userCommandDict(cmd) == "HELP":
 			showHelp()
 		if userCommandDict(cmd) == "QUIT":
-			th_panel.terminate()
+			killAll()
 			break
 		elif userCommandDict(cmd)== "VIEW-IMAGE":
 			th_panel.play(userCommandDict(cmd))
