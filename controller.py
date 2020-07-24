@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+#
+# The Raspberry Pi panel controller is the client part of IoT panel advertising project.
+# This is the main file of the project.
+#
 import os
 import sys
 import logging
@@ -9,12 +13,15 @@ import signal
 from time import time
 from pathlib import Path
 from threading import Thread
+
 from matrix_config import MatrixConfig
+import common
 
 #--------------------------------------------------------------
 # todo: 
 # 1. receive commands from server
 # 2. apply received commands
+# 3. separate log files by date
 #--------------------------------------------------------------
 
 
@@ -93,12 +100,12 @@ class PanelDisplay (Thread):
         if 'led-row-addr-type' in self.matrixConfig.sectionDict['GENERAL'].keys():
             cmd_params.extend(["--led-row-addr-type="+self.matrixConfig.sectionDict['GENERAL']['led-row-addr-type']])
         if 'led-show-refresh' in self.matrixConfig.sectionDict['GENERAL'].keys():
-            if getboolean(self.matrixConfig.sectionDict['GENERAL']['led-show-refresh']):
+            if common.getboolean(self.matrixConfig.sectionDict['GENERAL']['led-show-refresh']):
                 cmd_params.extend(["--led-show-refresh"])
         if 'led-limit-refresh' in self.matrixConfig.sectionDict['GENERAL'].keys():
             cmd_params.extend(["--led-limit-refresh="+self.matrixConfig.sectionDict['GENERAL']['led-limit-refresh']])
         if 'led-inverse' in self.matrixConfig.sectionDict['GENERAL'].keys():
-            if getboolean(self.matrixConfig.sectionDict['GENERAL']['led-inverse']):
+            if common.getboolean(self.matrixConfig.sectionDict['GENERAL']['led-inverse']):
                 cmd_params.extend(["--led-inverse"])
         if 'led-rgb-sequence' in self.matrixConfig.sectionDict['GENERAL'].keys():
             cmd_params.extend(["--led-rgb-sequence="+self.matrixConfig.sectionDict['GENERAL']['led-rgb-sequence']])
@@ -107,7 +114,7 @@ class PanelDisplay (Thread):
         if 'led-pwm-dither-bits' in self.matrixConfig.sectionDict['GENERAL'].keys():
             cmd_params.extend(["--led-pwm-dither-bits="+self.matrixConfig.sectionDict['GENERAL']['led-pwm-dither-bits']])
         if 'led-no-hardware-pulse' in self.matrixConfig.sectionDict['GENERAL'].keys():
-            if getboolean(self.matrixConfig.sectionDict['GENERAL']['led-no-hardware-pulse']):
+            if common.getboolean(self.matrixConfig.sectionDict['GENERAL']['led-no-hardware-pulse']):
                 cmd_params.extend(["--led-no-hardware-pulse"])
         if 'led-panel-type' in self.matrixConfig.sectionDict['GENERAL'].keys():
             cmd_params.extend(["--led-panel-type="+self.matrixConfig.sectionDict['GENERAL']['led-panel-type']])
@@ -117,7 +124,7 @@ class PanelDisplay (Thread):
         
         if self.contentType == "VIEW-IMAGE": 
             if 'image-center' in self.matrixConfig.sectionDict['IMAGE'].keys():
-                if getboolean(self.matrixConfig.sectionDict['IMAGE']['image-center']):
+                if common.getboolean(self.matrixConfig.sectionDict['IMAGE']['image-center']):
                     cmd_params.extend(["-C"])
             if 'image-wait' in self.matrixConfig.sectionDict['IMAGE'].keys():
                 cmd_params.extend(["-w"+self.matrixConfig.sectionDict['IMAGE']['image-wait']])
@@ -130,17 +137,17 @@ class PanelDisplay (Thread):
             if 'image-vsync-multiple' in self.matrixConfig.sectionDict['IMAGE'].keys():
                 cmd_params.extend(["-V"+self.matrixConfig.sectionDict['IMAGE']['image-vsync-multiple']])
             if 'image-forever-cycle' in self.matrixConfig.sectionDict['IMAGE'].keys():
-                if getboolean(self.matrixConfig.sectionDict['IMAGE']['image-forever-cycle']):
+                if common.getboolean(self.matrixConfig.sectionDict['IMAGE']['image-forever-cycle']):
                     cmd_params.extend(["-f"])
             if 'image-shuffle' in self.matrixConfig.sectionDict['IMAGE'].keys():
-                if getboolean(self.matrixConfig.sectionDict['IMAGE']['image-shuffle']):
+                if common.getboolean(self.matrixConfig.sectionDict['IMAGE']['image-shuffle']):
                     cmd_params.extend(["-s"])
             cmd_params.extend([self.filename])
 
 
         elif self.contentType == "VIEW-VIDEO": 
             if 'video-fullscreen' in self.matrixConfig.sectionDict['VIDEO'].keys():
-                if getboolean(self.matrixConfig.sectionDict['VIDEO']['video-fullscreen']):
+                if common.getboolean(self.matrixConfig.sectionDict['VIDEO']['video-fullscreen']):
                     cmd_params.extend(["-F"])
             if 'video-skip-frames' in self.matrixConfig.sectionDict['VIDEO'].keys():
                 cmd_params.extend(["-s"+self.matrixConfig.sectionDict['VIDEO']['video-skip-frames']])
@@ -149,10 +156,10 @@ class PanelDisplay (Thread):
             if 'video-vsync-multiple' in self.matrixConfig.sectionDict['VIDEO'].keys():
                 cmd_params.extend(["-V"+self.matrixConfig.sectionDict['VIDEO']['video-vsync-multiple']])
             if 'video-verbose' in self.matrixConfig.sectionDict['VIDEO'].keys():
-                if getboolean(self.matrixConfig.sectionDict['VIDEO']['video-verbose']):
+                if common.getboolean(self.matrixConfig.sectionDict['VIDEO']['video-verbose']):
                     cmd_params.extend(["-v"])
             if 'video-loop' in self.matrixConfig.sectionDict['VIDEO'].keys():
-                if getboolean(self.matrixConfig.sectionDict['VIDEO']['video-loop']):
+                if common.getboolean(self.matrixConfig.sectionDict['VIDEO']['video-loop']):
                     cmd_params.extend(["-f"])
             cmd_params.extend([self.filename])
 
@@ -192,11 +199,6 @@ class PanelDisplay (Thread):
 #--------------------------------------------------------------
 # Global vriables
 
-def getboolean(val:str):
-    if (val.lower() == 'yes' or val.lower() == 'true' 
-        or val.lower() == 'on' or val.lower() == '1' ):
-        return True
-    return False
 
 #--------------------------------------------------------------
 # In terminal UI methods
@@ -258,7 +260,7 @@ def killAll():
     pidList.extend(get_pid("text-scroller"))
     
     if len(pidList)>0:
-        logging.info(str(len(pidList))+" running viewer(s) already exist. Killing them before start.")
+        logging.info(str(len(pidList))+" running viewer(s) already exist..")
     for pid in pidList:
         os.kill(pid, signal.SIGKILL)
     
