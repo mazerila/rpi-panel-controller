@@ -29,10 +29,13 @@ q/quit     : Quit the program
 h/help     : Show help
 di/d-image : Display the current file as an image
 dv/d-video : Display the current file as a video
+dt/d-text  : Display the scrolling text from file
 s/stop     : Stop displaying
 r/restart  : Display from the beginning
 f/file     : set file name
 k/killall  : kill all other running viewers
+c/showconf : Show current configurations
+rc/reloadconf : Reload configuration file
 ```
 
 ### Logging
