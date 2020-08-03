@@ -4,7 +4,7 @@ Actually it has just a CLI to control the device.
 
 -------------------
 
-### Requirement
+## Requirement
 Before start using this, please follow this instruction:
 1. download the project hzeller/rpi-rgb-led-matrix :
 https://github.com/hzeller/rpi-rgb-led-matrix/
@@ -20,11 +20,11 @@ sudo apt-get install libavcodec-dev
 make 
 ```
 
-### Execution
+## Execution
 - The project is based on Python3.
 - The main file of the project is *controller.py* and should be executed as sudo.
 
-### User terminal commands 
+## User terminal commands 
 - There is a second start point for this product in order to use for local tests *controller_local.py*. It should be executed as sudo as well.
 ```
 q/quit     : Quit the program
@@ -40,13 +40,13 @@ c/showconf : Show current configurations
 rc/reloadconf : Reload configuration file
 ```
 
-### Logging
+## Logging
 The log file will generated in the folder */logs* in separated files by date.
 
-### Configuration
+## Configuration
 There is two config file provided in the project:
-# *matrix.cfg*
+#### *matrix.cfg*
   This file includes all configurations related to the the viewers.
-# *device.cfg*
+#### *device.cfg*
   This file includes registration information of the device.
 
