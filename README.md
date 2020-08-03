@@ -1,5 +1,6 @@
 # rpi-panel-controller
 The Raspberry Pi panel controller is the client part of IoT panel advertising project.
+Actually it has just a CLI to control the device.
 
 -------------------
 
