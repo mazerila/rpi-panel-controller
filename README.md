@@ -11,7 +11,7 @@ https://github.com/hzeller/rpi-rgb-led-matrix/
 This is the open source driver for matrix panels.
 2. Compile it as explained in the README file, using the Makefile provided in the folder */externs*.
 3. Switch off on-board sound (dtparam=audio=off in */boot/config.txt*). More detail in the mentioned README file.
-4. in the folder *utils/*
+4. in the folder utils/
 ```
 sudo apt-get update
 sudo apt-get install libgraphicsmagick++-dev libwebp-dev -y
@@ -23,9 +23,15 @@ make
 ## Execution
 - The project is based on Python3.
 - The main file of the project is *controller.py* and should be executed as sudo.
+```
+sudo python3 controller.py
+```
 
-## User terminal commands 
-- There is a second start point for this product in order to use for local tests *controller_local.py*. It should be executed as sudo as well.
+
+- There is a second start point for this product in order to use for local tests. It should be executed as sudo as well.
+```
+sudo python3 controller_local.py
+```
 ```
 q/quit     : Quit the program
 h/help     : Show help
