@@ -39,6 +39,7 @@ class DeviceConfig(metaclass=SingletonMeta):
     idScope: str = None
     registrationId: str = None
     symmetricKey: str = None
+    syncInterval = 10
     
     def __init__(self, path: str = r'configs/device.cfg') -> None:
         self.configFilePath = path
@@ -68,6 +69,8 @@ class DeviceConfig(metaclass=SingletonMeta):
             self.registrationId = self.sectionDict['DEVICE']['registration-id']
         if 'symmetric-key' in self.sectionDict['DEVICE'].keys():
             self.symmetricKey = self.sectionDict['DEVICE']['symmetric-key']
+        if 'sync-interval' in self.sectionDict['DEVICE'].keys():
+            self.syncInterval = self.sectionDict['DEVICE']['sync-interval']
 
     def reloadDeviceConfigs(self) -> None:
         self.initialized = False
