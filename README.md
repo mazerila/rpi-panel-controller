@@ -21,7 +21,7 @@ sudo apt-get install libmagick++-dev
 sudo apt-get install libavcodec-dev
 make all
 ```
-
+<br>
 ## Execution
 - The project is based on Python3.
 - The main file of the project is *controller.py* and should be executed as sudo.
@@ -29,7 +29,6 @@ make all
 sudo python3 controller.py
 ```
 <br>
-
 - There is a second start point for this product in order to use for local tests. It should be executed as sudo as well.
 ```
 sudo python3 controller_local.py
@@ -47,14 +46,14 @@ k/killall   : kill all other running viewers
 c/showconf  : Show current configurations
 rc/reloadconf : Reload configuration file
 ```
-
-## Logging
-The log files will generated in the folder *logs/* in separated files by date.
-
+<br>
 ## Configuration
 There is two config file provided in the project within the folder *configs/*:
 #### **matrix.cfg**
   This file includes all configurations related to the the viewers.
 #### **device.cfg**
   This file includes registration information of the device.
+<br>
+## Logging
+The log files will generated in the folder *logs/* in separated files by date.
 
