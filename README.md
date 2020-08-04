@@ -4,7 +4,8 @@ The Raspberry Pi panel controller is the client part of IoT panel advertising pr
 -------------------
 
 ## Requirements
-Before start using this, please follow this instruction:
+If you use a RPI3 or RPI4, executable binary files of the panel's driver are already added to the folder *bin/* and you may skip the following instruction.
+Otherwise, please follow this instruction to download and compile it.
 1. download the project *hzeller/rpi-rgb-led-matrix* :
 https://github.com/hzeller/rpi-rgb-led-matrix/
 This is the open source driver for matrix panels.
@@ -20,6 +21,7 @@ sudo apt-get install libmagick++-dev
 sudo apt-get install libavcodec-dev
 make all
 ```
+5. Replace three genetared binaries from  *rpi-rgb-led-matrix/utils/*  to  *rpi-panel-controller/bin/*
 <br>
 
 ## Execution
