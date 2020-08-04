@@ -6,12 +6,12 @@ Actually it has just a CLI to control the device.
 
 ## Requirement
 Before start using this, please follow this instruction:
-1. download the project hzeller/rpi-rgb-led-matrix :
+1. download the project *hzeller/rpi-rgb-led-matrix* :
 https://github.com/hzeller/rpi-rgb-led-matrix/
 This is the open source driver for matrix panels.
-2. Compile it as explained in the README file, using the Makefile provided in the folder */externs*.
+2. Compile it as explained in the README file, using the Makefile provided in the folder *externs/*.
 3. Switch off on-board sound (dtparam=audio=off in */boot/config.txt*). More detail in the mentioned README file.
-4. in the folder utils/
+4. in the folder *utils/*
 ```
 sudo apt-get update
 sudo apt-get install libgraphicsmagick++-dev libwebp-dev -y
@@ -47,7 +47,7 @@ rc/reloadconf : Reload configuration file
 ```
 
 ## Logging
-The log files will generated in the folder */logs* in separated files by date.
+The log files will generated in the folder *logs/* in separated files by date.
 
 ## Configuration
 There is two config file provided in the project within the folder *configs/*:
