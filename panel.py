@@ -58,11 +58,12 @@ class PanelDisplay (Thread):
             return
 
         if self.contentType == "VIEW-IMAGE":
-            viewer="/home/pi/src/rpi-rgb-led-matrix/utils/p-image-viewer"
+            viewer="bin/p-image-viewer"
+            #viewer="/home/pi/src/rpi-rgb-led-matrix/utils/p-image-viewer"
         elif self.contentType == "VIEW-VIDEO":
-            viewer="/home/pi/src/rpi-rgb-led-matrix/utils/p-video-viewer"    
+            viewer="bin/p-video-viewer"    
         elif self.contentType == "VIEW-TEXT":
-            viewer="/home/pi/src/rpi-rgb-led-matrix/utils/p-text-scroller"            
+            viewer="bin/p-text-scroller"            
 
         print (viewer, "Displaying the file: ", self.filename)
         logging.info("Displaying the file: " + self.filename)
