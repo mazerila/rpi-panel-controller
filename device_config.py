@@ -40,7 +40,7 @@ class DeviceConfig(metaclass=SingletonMeta):
     registrationId: str = None
     symmetricKey: str = None
     
-    def __init__(self, path: str = r'device.cfg') -> None:
+    def __init__(self, path: str = r'configs/device.cfg') -> None:
         self.configFilePath = path
         self.__loadDeviceConfigs()
 
@@ -85,7 +85,7 @@ class DeviceConfig(metaclass=SingletonMeta):
 
 # Test code
 '''
-conf1 = DeviceConfig(r'device.cfg')
+conf1 = DeviceConfig(r'configs/device.cfg')
 conf1.displayConfigs()
 conf1.reloadDeviceConfigs()
 conf1.displayConfigs()

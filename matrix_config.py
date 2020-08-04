@@ -37,7 +37,7 @@ class MatrixConfig():
     # Configurations are loaded in 2-level dictionary: [section,[name,value]]
     sectionDict = None
         
-    def __init__(self, path: str = r'matrix.cfg') -> None:
+    def __init__(self, path: str = r'configs/matrix.cfg') -> None:
         self.configFilePath = path
         self.__loadMatrixConfigs()
 
@@ -71,7 +71,7 @@ class MatrixConfig():
 
 # Test code
 '''
-conf1 = MatrixConfig(r'rpi-panel-controller/matrix.cfg')
+conf1 = MatrixConfig(r'rpi-panel-controller/configs/matrix.cfg')
 conf1.displayConfigs()
 conf1.reloadMatrixConfigs(r'rpi-panel-controller/matrix2.cfg')
 if conf1.initialized :
