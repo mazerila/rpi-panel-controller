@@ -67,15 +67,10 @@ def userCommandDict(cmd):
 
 #--------------------------------------------------------------
 # Main thread
-
+ 
 def main():
-    logPath = '/home/pi/src/rpi-panel-controller/logs/'
-    Path(logPath).mkdir(parents=True, exist_ok=True) 
-    logging.basicConfig(filename=logPath+datetime.datetime.now().strftime("%Y%m%d")+'.log'
-        , level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    logger = logging.getLogger(__name__)
-    logging.info('')
-    logging.info('Started')
+    common.setLogger()
+    logging.info('<< Started >>')
     ts = time()
     try:
         th_panel = PanelDisplay(1, "Th-display")
@@ -116,7 +111,7 @@ def main():
             print('Matrix config file reloaded: ', th_panel.matrixConfig.configFilePath)
       
     logging.info('Exiting Main Thread : Took %s', time() - ts)
-    logging.info('Finished')
+    logging.info('<< Exited >>')
 
 
 if __name__ == '__main__':

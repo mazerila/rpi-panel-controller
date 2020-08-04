@@ -4,8 +4,11 @@
 import os
 import sys
 import signal
+import logging
+import datetime
 import subprocess
 import collections
+from pathlib import Path
 
 def getboolean(val:str):
     if (val.lower() == 'yes' or val.lower() == 'true' 
@@ -31,3 +34,11 @@ def killAll():
         os.kill(pid, signal.SIGKILL)
     return ret
     
+def setLogger():
+    logPath = '/home/pi/src/rpi-panel-controller/logs/'
+    Path(logPath).mkdir(parents=True, exist_ok=True) 
+    logging.basicConfig(filename=logPath+datetime.datetime.now().strftime("%Y%m%d")+'.log'
+        , level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    logger = logging.getLogger(__name__)
+    logging.info('')
+   
