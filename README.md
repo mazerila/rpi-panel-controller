@@ -14,7 +14,6 @@ This is the open source driver for matrix panels.
 4. Compile APIs in the inner folder *rpi-rgb-led-matrix/utils/*, 
    - Copy the Makefile from  *rpi-panel-controller/externs/*  to  *rpi-rgb-led-matrix/utils/*
    - Compile it using the following commands:
-
 ```
 sudo apt-get update
 sudo apt-get install libgraphicsmagick++-dev libwebp-dev -y
@@ -22,7 +21,6 @@ sudo apt-get install libmagick++-dev
 sudo apt-get install libavcodec-dev
 make all
 ```
-
 5. Replace three genetared binaries from  *rpi-rgb-led-matrix/utils/*  to  *rpi-panel-controller/bin/*
 <br>
 
@@ -33,6 +31,7 @@ make all
 sudo python3 controller.py
 ```
 <br>
+
 - There is a second start point for this product in order to use for local tests. It should be executed as sudo as well.
 ```
 sudo python3 controller_local.py
@@ -50,6 +49,7 @@ k/killall   : kill all other running viewers
 c/showconf  : Show current configurations
 rc/reloadconf : Reload configuration file
 ```
+
 <br>
 
 ## Configuration
