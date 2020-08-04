@@ -69,7 +69,9 @@ def userCommandDict(cmd):
 # Main thread
 
 def main():
-    logging.basicConfig(filename='/home/pi/src/rpi-panel-controller/logs/'+datetime.datetime.now().strftime("%Y%m%d")+'.log'
+    logPath = '/home/pi/src/rpi-panel-controller/logs/'
+    Path(logPath).mkdir(parents=True, exist_ok=True) 
+    logging.basicConfig(filename=logPath+datetime.datetime.now().strftime("%Y%m%d")+'.log'
         , level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     logger = logging.getLogger(__name__)
     logging.info('')
