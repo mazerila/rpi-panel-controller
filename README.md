@@ -47,12 +47,12 @@ rc/reloadconf : Reload configuration file
 ```
 
 ## Logging
-The log file will generated in the folder */logs* in separated files by date.
+The log files will generated in the folder */logs* in separated files by date.
 
 ## Configuration
-There is two config file provided in the project:
-#### *matrix.cfg*
+There is two config file provided in the project within the folder *configs/*:
+#### **matrix.cfg**
   This file includes all configurations related to the the viewers.
-#### *device.cfg*
+#### **device.cfg**
   This file includes registration information of the device.
 
