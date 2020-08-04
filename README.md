@@ -4,7 +4,7 @@ Actually it has just a CLI to control the device.
 
 -------------------
 
-## Requirement
+## Requirements
 Before start using this, please follow this instruction:
 1. download the project *hzeller/rpi-rgb-led-matrix* :
 https://github.com/hzeller/rpi-rgb-led-matrix/
@@ -28,7 +28,7 @@ make all
 ```
 sudo python3 controller.py
 ```
-
+<br>
 
 - There is a second start point for this product in order to use for local tests. It should be executed as sudo as well.
 ```
