@@ -9,15 +9,17 @@ Before start using this, please follow this instruction:
 1. download the project *hzeller/rpi-rgb-led-matrix* :
 https://github.com/hzeller/rpi-rgb-led-matrix/
 This is the open source driver for matrix panels.
-2. Compile it as explained in the README file, using the Makefile provided in the folder *externs/*.
+2. Compile it as explained in the README file.
 3. Switch off on-board sound (dtparam=audio=off in */boot/config.txt*). More detail in the mentioned README file.
-4. in the folder *utils/*
+4. Compile APIs in the inner folder *rpi-rgb-led-matrix/utils/*, 
+   - Copy the Makefile from  *rpi-panel-controller/externs/*  to  *rpi-rgb-led-matrix/utils/*
+   - Compile it using the following commands:
 ```
 sudo apt-get update
 sudo apt-get install libgraphicsmagick++-dev libwebp-dev -y
 sudo apt-get install libmagick++-dev
 sudo apt-get install libavcodec-dev
-make 
+make all
 ```
 
 ## Execution
