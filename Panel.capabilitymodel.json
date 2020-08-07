@@ -1,0 +1,411 @@
+{
+  "@id": "urn:DigiAdsPanel:PanelTemplate:2",
+  "@type": "CapabilityModel",
+  "implements": [
+    {
+      "@id": "urn:DigiAdsPanel:PanelTemplate:deviceinfo:1",
+      "@type": "InterfaceInstance",
+      "name": "deviceinfo",
+      "schema": {
+        "@id": "urn:azureiot:DeviceManagement:DeviceInformation:1",
+        "@type": "Interface",
+        "displayName": {
+          "en": "Device Information"
+        },
+        "contents": [
+          {
+            "@id": "urn:azureiot:DeviceManagement:DeviceInformation:manufacturer:1",
+            "@type": "Property",
+            "comment": "Company name of the device manufacturer. This could be the same as the name of the original equipment manufacturer (OEM). Ex. Contoso.",
+            "displayName": {
+              "en": "Manufacturer"
+            },
+            "name": "manufacturer",
+            "schema": "string"
+          },
+          {
+            "@id": "urn:azureiot:DeviceManagement:DeviceInformation:model:1",
+            "@type": "Property",
+            "comment": "Device model name or ID. Ex. Surface Book 2.",
+            "displayName": {
+              "en": "Device model"
+            },
+            "name": "model",
+            "schema": "string"
+          },
+          {
+            "@id": "urn:azureiot:DeviceManagement:DeviceInformation:swVersion:1",
+            "@type": "Property",
+            "comment": "Version of the software on your device. This could be the version of your firmware. Ex. 1.3.45",
+            "displayName": {
+              "en": "Software version"
+            },
+            "name": "swVersion",
+            "schema": "string"
+          },
+          {
+            "@id": "urn:azureiot:DeviceManagement:DeviceInformation:osName:1",
+            "@type": "Property",
+            "comment": "Name of the operating system on the device. Ex. Windows 10 IoT Core.",
+            "displayName": {
+              "en": "Operating system name"
+            },
+            "name": "osName",
+            "schema": "string"
+          },
+          {
+            "@id": "urn:azureiot:DeviceManagement:DeviceInformation:processorArchitecture:1",
+            "@type": "Property",
+            "comment": "Architecture of the processor on the device. Ex. x64 or ARM.",
+            "displayName": {
+              "en": "Processor architecture"
+            },
+            "name": "processorArchitecture",
+            "schema": "string"
+          },
+          {
+            "@id": "urn:azureiot:DeviceManagement:DeviceInformation:processorManufacturer:1",
+            "@type": "Property",
+            "comment": "Name of the manufacturer of the processor on the device. Ex. Intel.",
+            "displayName": {
+              "en": "Processor manufacturer"
+            },
+            "name": "processorManufacturer",
+            "schema": "string"
+          },
+          {
+            "@id": "urn:azureiot:DeviceManagement:DeviceInformation:totalStorage:1",
+            "@type": "Property",
+            "comment": "Total available storage on the device in kilobytes. Ex. 2048000 kilobytes.",
+            "displayName": {
+              "en": "Total storage"
+            },
+            "name": "totalStorage",
+            "displayUnit": {
+              "en": "kilobytes"
+            },
+            "schema": "long"
+          },
+          {
+            "@id": "urn:azureiot:DeviceManagement:DeviceInformation:totalMemory:1",
+            "@type": "Property",
+            "comment": "Total available memory on the device in kilobytes. Ex. 256000 kilobytes.",
+            "displayName": {
+              "en": "Total memory"
+            },
+            "name": "totalMemory",
+            "displayUnit": {
+              "en": "kilobytes"
+            },
+            "schema": "long"
+          }
+        ]
+      }
+    },
+    {
+      "@id": "urn:DigiAdsPanel:PanelTemplate:property:1",
+      "@type": "InterfaceInstance",
+      "displayName": {
+        "en": "Panel Property"
+      },
+      "name": "property",
+      "schema": {
+        "@id": "urn:panelhub:PanelProperty:1",
+        "@type": "Interface",
+        "displayName": {
+          "en": "Panel Property"
+        },
+        "contents": [
+          {
+            "@id": "urn:panelhub:PanelProperty:state:1",
+            "@type": "Property",
+            "displayName": "Device State",
+            "description": "The state of the device. Two states online/offline are available.",
+            "name": "state",
+            "schema": "boolean"
+          },
+          {
+            "@id": "urn:panelhub:PanelProperty:customerName:1",
+            "@type": "Property",
+            "description": {
+              "en": "The name of the customer currently operating the device."
+            },
+            "displayName": {
+              "en": "Customer Name"
+            },
+            "name": "customerName",
+            "writable": true,
+            "schema": "string"
+          },
+          {
+            "@id": "urn:panelhub:PanelProperty:brightness:1",
+            "@type": "Property",
+            "description": {
+              "en": "The brightness level for the light on the device. Can be specified as 1 (high), 2 (medium), 3 (low)"
+            },
+            "displayName": {
+              "en": "Brightness Level"
+            },
+            "name": "brightness",
+            "writable": true,
+            "schema": "long"
+          }
+        ]
+      }
+    },
+    {
+      "@id": "urn:DigiAdsPanel:PanelTemplate:telemetry:1",
+      "@type": "InterfaceInstance",
+      "displayName": {
+        "en": "Panel Telemetry"
+      },
+      "name": "telemetry",
+      "schema": {
+        "@id": "urn:panelhub:PanelTelemetry:1",
+        "@type": "Interface",
+        "displayName": {
+          "en": "Panel Telemetry"
+        },
+        "contents": [
+          {
+            "@id": "urn:panelhub:PanelTelemetry:latitude:1",
+            "@type": [
+              "Telemetry",
+              "SemanticType/Location"
+            ],
+            "description": {
+              "en": "The Latitude of the current position of device"
+            },
+            "displayName": {
+              "en": "Latitude"
+            },
+            "name": "latitude",
+            "schema": "geopoint"
+          },
+          {
+            "@id": "urn:panelhub:PanelTelemetry:longitude:1",
+            "@type": [
+              "Telemetry",
+              "SemanticType/Location"
+            ],
+            "description": {
+              "en": "The Longitude of the current position of device"
+            },
+            "displayName": {
+              "en": "Longitude"
+            },
+            "name": "longitude",
+            "schema": "geopoint"
+          },
+          {
+            "@id": "urn:panelhub:PanelTelemetry:syncInterval:1",
+            "@type": "Telemetry",
+            "description": {
+              "en": "The Synchronization Interval (update rate) shows the sending message interval time in seconds to update the server."
+            },
+            "displayName": {
+              "en": "Sync Interval"
+            },
+            "name": "syncInterval",
+            "displayUnit": {
+              "en": "Seconds"
+            },
+            "schema": "integer"
+          },
+          {
+            "@id": "urn:panelhub:PanelTelemetry:status:1",
+            "@type": [
+              "Telemetry",
+              "SemanticType/State"
+            ],
+            "description": {
+              "en": "The current state of the panel's activity"
+            },
+            "displayName": {
+              "en": "Status"
+            },
+            "name": "status",
+            "schema": {
+              "@id": "urn:panelhub:PanelTelemetry:status:zeubmtbjq:1",
+              "@type": "Enum",
+              "valueSchema": "string",
+              "enumValues": [
+                {
+                  "@id": "urn:panelhub:PanelTelemetry:status:zeubmtbjq:DRIVING_ON:1",
+                  "@type": "EnumValue",
+                  "displayName": {
+                    "en": "DRIVING_ON"
+                  },
+                  "enumValue": "1",
+                  "name": "DRIVING_ON"
+                },
+                {
+                  "@id": "urn:panelhub:PanelTelemetry:status:zeubmtbjq:DRIVING_OFF:1",
+                  "@type": "EnumValue",
+                  "displayName": {
+                    "en": "DRIVING_OFF"
+                  },
+                  "enumValue": "2",
+                  "name": "DRIVING_OFF"
+                },
+                {
+                  "@id": "urn:panelhub:PanelTelemetry:status:zeubmtbjq:PARKING_ON:1",
+                  "@type": "EnumValue",
+                  "displayName": {
+                    "en": "PARKING_ON"
+                  },
+                  "enumValue": "3",
+                  "name": "PARKING_ON"
+                },
+                {
+                  "@id": "urn:panelhub:PanelTelemetry:status:zeubmtbjq:PARKING_OFF:1",
+                  "@type": "EnumValue",
+                  "displayName": {
+                    "en": "PARKING_OFF"
+                  },
+                  "enumValue": "4",
+                  "name": "PARKING_OFF"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@id": "urn:DigiAdsPanel:PanelTemplate:command:1",
+      "@type": "InterfaceInstance",
+      "displayName": {
+        "en": "Panel Command"
+      },
+      "name": "command",
+      "schema": {
+        "@id": "urn:panelhub:PanelCommand:1",
+        "@type": "Interface",
+        "displayName": {
+          "en": "Panel Command"
+        },
+        "contents": [
+          {
+            "@id": "urn:panelhub:PanelCommand:turnOff:1",
+            "@type": "Command",
+            "commandType": "synchronous",
+            "durable": false,
+            "description": {
+              "en": "Turn the device off immediately the device. his may result to a total disconnection."
+            },
+            "displayName": {
+              "en": "Turn Off"
+            },
+            "name": "turnOff"
+          },
+          {
+            "@id": "urn:panelhub:PanelCommand:restartDevice:1",
+            "@type": "Command",
+            "commandType": "synchronous",
+            "durable": false,
+            "description": {
+              "en": "Restart the device"
+            },
+            "displayName": {
+              "en": "Restart Device"
+            },
+            "name": "restartDevice"
+          },
+          {
+            "@id": "urn:panelhub:PanelCommand:display:1",
+            "@type": "Command",
+            "commandType": "synchronous",
+            "durable": false,
+            "description": {
+              "en": "Start displaying configured file"
+            },
+            "displayName": {
+              "en": "Display"
+            },
+            "name": "display"
+          },
+          {
+            "@id": "urn:panelhub:PanelCommand:stop:1",
+            "@type": "Command",
+            "commandType": "synchronous",
+            "durable": false,
+            "description": {
+              "en": "Stop the current display"
+            },
+            "displayName": {
+              "en": "Stop"
+            },
+            "name": "stop"
+          },
+          {
+            "@id": "urn:panelhub:PanelCommand:restartViewer:1",
+            "@type": "Command",
+            "commandType": "synchronous",
+            "durable": false,
+            "displayName": {
+              "en": "Restart Viewer"
+            },
+            "name": "restartViewer"
+          },
+          {
+            "@id": "urn:panelhub:PanelCommand:setFileName:1",
+            "@type": "Command",
+            "commandType": "synchronous",
+            "durable": false,
+            "request": {
+              "@id": "urn:panelhub:PanelCommand:setFileName:path:1",
+              "@type": "SchemaField",
+              "description": {
+                "en": "Local relative file path"
+              },
+              "displayName": {
+                "en": "Path"
+              },
+              "name": "path",
+              "schema": "string"
+            },
+            "description": {
+              "en": "Set the file path on the device to be displayed"
+            },
+            "displayName": {
+              "en": "Set File Name"
+            },
+            "name": "setFileName"
+          },
+          {
+            "@id": "urn:panelhub:PanelCommand:setContentType:1",
+            "@type": "Command",
+            "commandType": "synchronous",
+            "durable": false,
+            "request": {
+              "@id": "urn:panelhub:PanelCommand:SetContentType:ContentType:1",
+              "@type": "SchemaField",
+              "description": {
+                "en": "The content type in string"
+              },
+              "displayName": {
+                "en": "Content Type"
+              },
+              "name": "ContentType",
+              "schema": "string"
+            },
+            "description": {
+              "en": "Required to be able for choosing the proper viewer"
+            },
+            "displayName": {
+              "en": "Set Content Type"
+            },
+            "name": "setContentType"
+          }
+        ]
+      }
+    }
+  ],
+  "displayName": {
+    "en": "Panel Capability Model"
+  },
+  "@context": [
+    "http://azureiot.com/v1/contexts/IoTModel.json"
+  ]
+}
