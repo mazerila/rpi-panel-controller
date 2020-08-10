@@ -268,37 +268,6 @@ async def main():
         print('Device could not connect')
 
 
-    
-    '''   
-    while True:
-        cmd = input().lower()
-        if userCommandDict(cmd) == "QUIT":
-            killed = common.killAll()
-            if killed > 0:
-                logging.info(str(killed)+" running viewer(s) already exist..")
-            break
-        elif userCommandDict(cmd) == "VIEW-IMAGE":
-            th_panel.play(userCommandDict(cmd))
-        elif userCommandDict(cmd) == "VIEW-VIDEO":
-            th_panel.play(userCommandDict(cmd))
-        elif userCommandDict(cmd) == "VIEW-TEXT":
-            th_panel.play(userCommandDict(cmd))
-        elif userCommandDict(cmd) == "RESTART":
-            th_panel.restart()
-        elif userCommandDict(cmd) == "STOP":
-            th_panel.terminate()
-        elif userCommandDict(cmd) == "FILE":
-            th_panel.filename = input("enter the file name: ")
-        elif userCommandDict(cmd) == "KILLALL":
-            killed = common.killAll()
-            if killed > 0:
-                logging.info(str(killed)+" running viewer(s) already exist..")
-        elif userCommandDict(cmd) == "SHOWCONFIG":
-            th_panel.matrixConfig.displayConfigs()
-        elif userCommandDict(cmd) == "RELOADCONFIG":
-            th_panel.matrixConfig.reloadMatrixConfigs()
-            print('Matrix config file reloaded: ', th_panel.matrixConfig.configFilePath)
-    '''    
     logging.info('Exiting Main Thread : Took %s', time() - ts)
     logging.info('<< Exited >>')
         
