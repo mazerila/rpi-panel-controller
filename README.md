@@ -4,6 +4,7 @@ The Raspberry Pi panel controller is the client part of IoT panel advertising pr
 -------------------
 
 ## Requirements
+### RGB panel driver
 If you use a RPI3 or RPI4, executable binary files of the panel's driver are already added to the folder *bin/* and you may skip the following instruction.
 Otherwise, please follow this instruction to download and compile it.
 1. download the project *hzeller/rpi-rgb-led-matrix* :
@@ -22,6 +23,32 @@ sudo apt-get install libavcodec-dev
 make all
 ```
 5. Replace three genetared binaries from  *rpi-rgb-led-matrix/utils/*  to  *rpi-panel-controller/bin/*
+
+### Azure IoT service
+We use the Microsoft Azure services as our In order to run this application, you may install microsoft azure iot packages for python as sudo:
+```
+pip3 list | grep -i azure
+sudo pip3 install azure-iot-device
+```
+
+### GPS
+The current GPS model is **VK-162 GMOUSE G-MOUSE GPS Navigation USB**.
+The linux package to read the GPS data is called GPSD.
+http://www.catb.org/gpsd/
+https://gpsd.gitlab.io/gpsd/index.html
+Follow the bellow instruction for installing required packeges.
+```
+sudo apt-get install gpsd gpsd-clients python-gps
+sudo systemctl stop gpsd.socket
+sudo systemctl disable gpsd.socket
+vim /lib/systemd/system/gpsd.socket
+sudo kilall gpsd
+sudo gpsd /dev/ttyACM0 -F /var/run/gpsd.sock
+```
+#### More information about GPS 
+Python codes: https://gist.github.com/Lauszus/5785023#file-gps-py
+Google API: https://developers.google.com/maps/documentation/javascript/overview#api_key
+NMEA Standard: https://www.gpsworld.com/what-exactly-is-gps-nmea-data/
 <br>
 
 ## Execution
