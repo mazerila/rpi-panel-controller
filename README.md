@@ -41,6 +41,8 @@ Follow the bellow instruction for installing required packeges.
 sudo apt-get install gpsd gpsd-clients python-gps
 sudo systemctl stop gpsd.socket
 sudo systemctl disable gpsd.socket
+
+# Change ListenStream to 0.0.0.0
 vim /lib/systemd/system/gpsd.socket
 sudo kilall gpsd
 sudo gpsd /dev/ttyACM0 -F /var/run/gpsd.sock
