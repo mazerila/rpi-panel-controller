@@ -84,7 +84,7 @@ def main():
         if userCommandDict(cmd) == "HELP":
             showHelp()
         if userCommandDict(cmd) == "QUIT":
-            killed = common.killAll()
+            killed = common.killViewers()
             if killed > 0:
                 logging.info(str(killed)+" running viewer(s) already exist..")
             break
@@ -101,7 +101,7 @@ def main():
         elif userCommandDict(cmd) == "FILE":
             th_panel.filename = input("enter the file name: ")
         elif userCommandDict(cmd) == "KILLALL":
-            killed = common.killAll()
+            killed = common.killViewers()
             if killed > 0:
                 logging.info(str(killed)+" running viewer(s) already exist..")
         elif userCommandDict(cmd) == "SHOWCONFIG":

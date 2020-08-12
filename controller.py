@@ -25,6 +25,8 @@ from matrix_config import MatrixConfig
 from device_config import DeviceConfig
 from panel import PanelDisplay
 import common
+import gps
+import serial
 
 #--------------------------------------------------------------
 # todo: 
@@ -68,12 +70,31 @@ async def connect_device(deviceConf):
     
 ## Send telemetry to your IoT Central application
 async def send_telemetry(device_client, deviceConf):
-    lat = random.randrange(39000, 42000) / 1000
-    lon = random.randrange(43000, 46000) / 1000
+    #lat = random.randrange(39000, 42000) / 1000
+    #lon = random.randrange(43000, 46000) / 1000
+    lat = 0.0
+    lon = 0.0
     print(f'Sending telemetry from the provisioned device every {deviceConf.syncInterval} seconds')
     while True:
-        lat = lat + (random.randrange(-100, 100) / 10000)
-        lon = lon + (random.randrange(-100, 100) / 10000)
+        #lat = lat + (random.randrange(-100, 100) / 10000)
+        #lon = lon + (random.randrange(-100, 100) / 10000)
+        if isGpsConnected :
+            try:
+                line = gps.readString(gpsSerial)
+                lines = line.split(",")
+                if gps.checksum(line):
+                    if lines[0] == "GPGLL":
+                        latlng = gps.getLatLng(lines[1], lines[3])
+                        orientation = -1 if lines[2] == "S" else 1
+                        lat = latlng[0] 
+                        orientation = -1 if lines[4] == "S" else 1
+                        lon = latlng[1] * orientation
+                print("Lat,Long: ", latlng[0], lines[2], ", ", latlng[1], lines[4], sep='')
+            except:
+                logging.warning("Something went wrong on GPS")
+        else :
+            lat = -1.0
+            lon = -1.0
         payload = json.dumps({'latitude': lat, 'longitude': lon})
         msg = Message(payload)
         await device_client.send_message(msg, )
@@ -195,7 +216,7 @@ def stdin_listener():
         selection = input('Press Q to quit\n')
         if selection == 'Q' or selection == 'q':
             print('Quitting...')
-            killed = common.killAll()
+            killed = common.killViewers()
             if killed > 0:
                 logging.info(str(killed)+" running viewer(s) already exist..")
             break
@@ -217,7 +238,19 @@ async def main():
         th_panel = PanelDisplay(1, "Th-display")
     except:
         logging.info("Error: unable to create thread")
-        
+    
+    # gps; Open Serial port
+    common.killGpsd()
+    global gpsSerial
+    global isGpsConnected
+    isGpsConnected = False
+    try:
+        gpsSerial = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
+        logging.info("GPS is connected now")
+        isGpsConnected = True
+    except:
+        logging.error("Error: unable to connect GPS")
+    
     # load connection information.
     global deviceConf
     deviceConf = DeviceConfig()

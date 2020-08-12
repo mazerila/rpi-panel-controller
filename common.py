@@ -24,16 +24,25 @@ def get_pid(name):
 
     return list(map(int,pids.split()))
 
-def killAll():
+def killViewers():
     # ps -A | grep viewer
     pidList = get_pid("p-video-viewer")
     pidList.extend(get_pid("p-image-viewer"))
     pidList.extend(get_pid("p-text-scroller"))
+    pidList.extend(get_pid("gpsd"))
     ret = len(pidList)
     for pid in pidList:
         os.kill(pid, signal.SIGKILL)
     return ret
-    
+
+def killGpsd():
+    # sudo killall gpsd
+    pidList = get_pid("gpsd")
+    ret = len(pidList)
+    for pid in pidList:
+        os.kill(pid, signal.SIGKILL)
+    return ret
+      
 def setLogger():
     logPath = '/home/pi/src/rpi-panel-controller/logs/'
     Path(logPath).mkdir(parents=True, exist_ok=True) 
