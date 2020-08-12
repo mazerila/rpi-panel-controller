@@ -44,7 +44,7 @@ sudo systemctl disable gpsd.socket
 
 # Change ListenStream to 0.0.0.0
 vim /lib/systemd/system/gpsd.socket
-sudo kilall gpsd
+sudo killall gpsd
 sudo gpsd /dev/ttyACM0 -F /var/run/gpsd.sock
 ```
 #### More information about GPS 
