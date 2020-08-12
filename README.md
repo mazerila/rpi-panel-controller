@@ -46,8 +46,12 @@ sudo kilall gpsd
 sudo gpsd /dev/ttyACM0 -F /var/run/gpsd.sock
 ```
 #### More information about GPS 
+Linux gpsd: https://gpsd.gitlab.io/gpsd/index.html
+
 Python codes: https://gist.github.com/Lauszus/5785023#file-gps-py
+
 Google API: https://developers.google.com/maps/documentation/javascript/overview#api_key
+
 NMEA Standard: https://www.gpsworld.com/what-exactly-is-gps-nmea-data/
 <br>
 
